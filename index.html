@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>For Miss Faith </title>
+  <title>For Miss Faith</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -21,6 +19,20 @@
       text-align: center;
       overflow: hidden;
       color: #fff;
+      transition: background 1s ease;
+    }
+
+    /* Background image overlay */
+    body.final-bg {
+      background: url("us.jpg") center center / cover no-repeat fixed;
+    }
+
+    body.final-bg::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 0;
     }
 
     /* Floating hearts */
@@ -30,17 +42,12 @@
       font-size: 20px;
       animation: floatUp 6s linear infinite;
       opacity: 0.8;
+      z-index: 1;
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-110vh) scale(1.5);
-        opacity: 0;
-      }
+      from { transform: translateY(0) scale(1); opacity: 1; }
+      to { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
 
     .card {
@@ -51,19 +58,12 @@
       max-width: 420px;
       width: 92%;
       box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-      z-index: 10;
+      z-index: 2;
+      position: relative;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-    }
-
-    p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin-bottom: 22px;
-    }
+    h1 { font-size: 1.8rem; margin-bottom: 12px; }
+    p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 22px; }
 
     button {
       padding: 14px 28px;
@@ -79,158 +79,158 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
 
-    .primary {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    .no {
-      background: white;
-      color: #ff4d6d;
-      position: relative;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    /* Final image */
-    .photo {
-      width: 170px;
-      height: 220px;
-      border-radius: 22px;
-      object-fit: cover;
-      margin: 20px auto;
-      border: 3px solid rgba(255,255,255,0.7);
-      animation: fadeIn 1s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    .primary { background: #ff4d6d; color: white; }
+    .no { background: white; color: #ff4d6d; position: relative; }
+    .hidden { display: none; }
 
     .yes-message {
       font-size: 1.2rem;
       font-weight: bold;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 14px;
+      top: -10px;
+      opacity: 0.9;
+      animation: fall linear forwards;
+      z-index: 5;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Floating hearts generator -->
-  <script>
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }, 500);
-  </script>
+<script>
+  /* Floating hearts */
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+  }, 500);
+</script>
 
-  <div class="card">
+<div class="card">
 
-    <!-- STAGE 1 -->
-    <div id="stage1">
-      <h1>Hey Faith </h1>
-      <p>
-        I know we’re miles apart <br>
-        <strong>502km</strong> to be exact, <br>
-        and that makes Valentine’s Day feel a bit different this year.
-      </p>
-      <button class="primary" onclick="next(1)">Next</button>
-    </div>
-
-    <!-- STAGE 2 -->
-    <div id="stage2" class="hidden">
-      <p>
-        The truth is, distance has made me more certain about one thing…
-        <br><br>
-        <strong>you — and us.</strong>
-      </p>
-      <button class="primary" onclick="next(2)">Next</button>
-    </div>
-
-    <!-- STAGE 3 -->
-    <div id="stage3" class="hidden">
-      <p>
-        Even though I can’t be there to hold your hand, cuddle you,
-        share some wine, steal you for a proper date or kiss <em>those</em> lips
-        <br><br>
-        you’re still the person I’d rather do all this with.
-      </p>
-      <button class="primary" onclick="next(3)">Next</button>
-    </div>
-
-    <!-- STAGE 4 -->
-    <div id="stage4" class="hidden">
-      <p>
-        From wherever I am, it has been just you.
-        <br><br>
-        And it is still you.
-      </p>
-      <button class="primary" onclick="next(4)">Next</button>
-    </div>
-
-    <!-- STAGE 5 -->
-    <div id="stage5" class="hidden">
-      <p>
-        Valentine’s Day is about love and intention.
-        I don’t want to assume anything.
-      </p>
-      <p>
-        So I want to say this properly and sincerely
-        <br>
-        <em>(goes down on one knee).</em>
-      </p>
-      <button class="primary" onclick="next(5)">Next</button>
-    </div>
-
-    <!-- FINAL STAGE -->
-    <div id="stage6" class="hidden">
-
-      <!-- ADD YOUR PHOTO HERE -->
-      <!-- Place the image file in the same folder and name it: us.jpg -->
-      <img src="us.jpg" alt="Us ❤️" class="photo" />
-
-      <p class="yes-message">
-        I want you to be my Valentine.
-        <br><br>
-        This year and the next. Will you say yes?
-      </p>
-
-      <div style="display:flex; justify-content:center; gap:16px; margin-top:20px;">
-        <button class="primary" onclick="yes()">Yes 💕</button>
-        <button class="no" onmouseover="runAway(this)">No 😅</button>
-      </div>
-
-      <p id="result" class="hidden" style="margin-top:20px;">
-        💖 You just made me the happiest person 💖
-      </p>
-    </div>
-
+  <div id="stage1">
+    <h1>Hey Faith ❤️</h1>
+    <p>
+      I know we’re miles apart <br>
+      <strong>502km</strong> to be exact, <br>
+      and that makes Valentine’s Day feel a bit different this year.
+    </p>
+    <button class="primary" onclick="next(1)">Next</button>
   </div>
 
-  <script>
-    function next(n) {
-      document.getElementById("stage" + n).classList.add("hidden");
-      document.getElementById("stage" + (n + 1)).classList.remove("hidden");
-    }
+  <div id="stage2" class="hidden">
+    <p>
+      The truth is, distance has made me more certain about one thing…
+      <br><br>
+      <strong>you — and us.</strong>
+    </p>
+    <button class="primary" onclick="next(2)">Next</button>
+  </div>
 
-    function runAway(btn) {
-      const x = Math.random() * 120 - 60;
-      const y = Math.random() * 120 - 60;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    }
+  <div id="stage3" class="hidden">
+    <p>
+      Even though I can’t be there to hold your hand, cuddle you,
+      share some wine, steal you for a proper date or kiss <em>those</em> lips
+      <br><br>
+      you’re still the person I’d rather do all this with.
+    </p>
+    <button class="primary" onclick="next(3)">Next</button>
+  </div>
 
-    function yes() {
-      document.getElementById("result").classList.remove("hidden");
+  <div id="stage4" class="hidden">
+    <p>
+      From wherever I am, it has been just you.
+      <br><br>
+      And it is still you.
+    </p>
+    <button class="primary" onclick="next(4)">Next</button>
+  </div>
+
+  <div id="stage5" class="hidden">
+    <p>
+      Valentine’s Day is about love and intention.
+      I don’t want to assume anything.
+    </p>
+    <p>
+      So I want to say this properly and sincerely
+      <br>
+      <em>(goes down on one knee).</em>
+    </p>
+    <button class="primary" onclick="next(5)">Next</button>
+  </div>
+
+  <div id="stage6" class="hidden">
+    <p class="yes-message">
+      I want you to be my Valentine.
+      <br><br>
+      This year and the next. Will you say yes?
+    </p>
+
+    <div style="display:flex; justify-content:center; gap:16px; margin-top:20px;">
+      <button class="primary" onclick="yes()">Yes 💕</button>
+      <button class="no" onmouseover="runAway(this)">No 😅</button>
+    </div>
+
+    <p id="result" class="hidden" style="margin-top:20px;">
+      💖 You just made me the happiest person 💖
+    </p>
+  </div>
+
+</div>
+
+<script>
+  function next(n) {
+    document.getElementById("stage" + n).classList.add("hidden");
+    document.getElementById("stage" + (n + 1)).classList.remove("hidden");
+
+    if (n + 1 === 6) {
+      document.body.classList.add("final-bg");
     }
-  </script>
+  }
+
+  function runAway(btn) {
+    const x = Math.random() * 120 - 60;
+    const y = Math.random() * 120 - 60;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  function yes() {
+    document.getElementById("result").classList.remove("hidden");
+    launchConfetti();
+  }
+
+  function launchConfetti() {
+    const colors = ["#ff4d6d", "#ffffff", "#ffd700", "#ff85a2"];
+
+    for (let i = 0; i < 120; i++) {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = 3 + Math.random() * 2 + "s";
+      document.body.appendChild(confetti);
+
+      setTimeout(() => confetti.remove(), 5000);
+    }
+  }
+</script>
 
 </body>
 </html>
